@@ -27,3 +27,10 @@
 *.exe
 *.out
 *.app
+
+# Makefiles
+Makefile
+Makefile.*
+
+# Other files
+*.user
