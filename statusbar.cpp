@@ -41,18 +41,17 @@ QColor StatusBar::color() const
 
 void StatusBar::setColor(const QColor &color)
 {
-#ifdef Q_OS_ANDROID
-    if (QtAndroid::androidSdkVersion() < 21)
+    Q_UNUSED(color);
+    if (!isAvailable())
         return;
 
+#ifdef Q_OS_ANDROID
     QtAndroid::runOnAndroidThread([=]() {
         QAndroidJniObject window = QtAndroid::androidActivity().callObjectMethod("getWindow", "()Landroid/view/Window;");
         window.callMethod<void>("addFlags", "(I)V", FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.callMethod<void>("clearFlags", "(I)V", FLAG_TRANSLUCENT_STATUS);
         window.callMethod<void>("setStatusBarColor", "(I)V", color.rgba());
     });
-#else
-    Q_UNUSED(color);
 #endif
 }
 
