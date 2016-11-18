@@ -76,7 +76,7 @@ ApplicationWindow {
         delegate: ItemDelegate {
             id: delegate
             text: modelData
-            width: parent.width
+            width: comboBox.popup.width
             background: Rectangle {
                 color: Material.color(index)
             }
