@@ -26,11 +26,6 @@
 
 #include "statusbar.h"
 
-static QObject *createStatusBar(QQmlEngine *engine, QJSEngine *)
-{
-    return new StatusBar(engine);
-}
-
 int main(int argc, char *argv[])
 {
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -38,7 +33,7 @@ int main(int argc, char *argv[])
 
     QQuickStyle::setStyle("Material");
 
-    qmlRegisterSingletonType<StatusBar>("StatusBar", 0, 1, "StatusBar", createStatusBar);
+    qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

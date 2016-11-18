@@ -40,10 +40,8 @@ ApplicationWindow {
         }
     }
 
-    Binding {
-        target: StatusBar
-        property: "color"
-        value: Material.color(comboBox.currentIndex, Material.Shade700)
+    StatusBar {
+        color: Material.color(comboBox.currentIndex, Material.Shade700)
     }
 
     ComboBox {
