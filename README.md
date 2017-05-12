@@ -1,13 +1,39 @@
-# statusbar
-A simple QML example app that sets the status bar color on Android.
+# StatusBar
+A simple StatusBar implementation that allows setting the status bar
+color (5.0 Lollipop or later) and theme (6.0 Marshmallow or later) on
+Android.
 
-![screenshot](https://github.com/jpnurmi/statusbar/raw/master/example/statusbar.png)
+![screenshot](example/statusbar.png)
 
-Registering the QML type in C++:
+## Build
 
-    qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
+The easiest way to include `StatusBar` to a project is to copy over the
+contents of the `src` folder and include `statusbar.pri` in the project
+file (see [example/statusbar.pro](example/statusbar.pro)):
 
-Example usage in QML:
+    include(path/to/statusbar.pri)
+
+## Register
+
+Registering the QML type in C++ (see [example/main.cpp](example/main.cpp)):
+
+    #include "statusbar.h"
+    
+    int main(int argc, char* argv[])
+    {
+        QGuiApplication app(argc, argv);
+
+        qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar"); // <==
+
+        QQmlApplicationEngine engine;
+        engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+        
+        return app.exec();
+    }
+
+## Usage
+
+Example usage in QML (see [example/main.qml](example/main.qml)):
 
     import StatusBar 0.1
 
