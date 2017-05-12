@@ -1,7 +1,9 @@
 # StatusBar
 A simple StatusBar implementation that allows setting the status bar
-color (5.0 Lollipop or later) and theme (6.0 Marshmallow or later) on
-Android.
+**color** <sup>[1]</sup> and **theme** <sup>[2]</sup> on Android.
+
+1. **NOTE**: *Requires Android 5.0 Lollipop (API level 21) or later.*
+2. **NOTE**: *Requires Android 6.0 Marshmallow (API level 23) or later.*
 
 ![screenshot](example/statusbar.png)
 
@@ -41,5 +43,3 @@ Example usage in QML (see [example/main.qml](example/main.qml)):
         theme: StatusBar.Dark // or Material.Dark
         color: Material.color(Material.Indigo, Material.Shade700)
     }
-
-*NOTE: Requires Android 5.0 Lollipop (API level 21) or later.*
