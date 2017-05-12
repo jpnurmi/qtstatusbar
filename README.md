@@ -12,6 +12,7 @@ Example usage in QML:
     import StatusBar 0.1
 
     StatusBar {
+        theme: StatusBar.Dark // or Material.Dark
         color: Material.color(Material.Indigo, Material.Shade700)
     }
 

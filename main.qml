@@ -33,58 +33,84 @@ ApplicationWindow {
 
     header: ToolBar {
         id: toolBar
-        Material.primary: comboBox.currentIndex
+        Material.primary: colorBox.currentIndex
         Label {
             anchors.centerIn: parent
-            text: comboBox.currentText
+            text: colorBox.currentText
         }
     }
+
+    Material.theme: themeBox.currentIndex
 
     StatusBar {
-        color: Material.color(comboBox.currentIndex, Material.Shade700)
+        theme: themeBox.currentIndex
+        color: Material.color(colorBox.currentIndex, Material.Shade700)
     }
 
-    ComboBox {
-        id: comboBox
+    Column {
+        spacing: 20
         anchors.centerIn: parent
 
-        displayText: "Select"
-        currentIndex: Material.Indigo
+        ComboBox {
+            id: colorBox
 
-        model: ListModel {
-            ListElement { name: "Red" }
-            ListElement { name: "Pink" }
-            ListElement { name: "Purple" }
-            ListElement { name: "DeepPurple" }
-            ListElement { name: "Indigo" }
-            ListElement { name: "Blue" }
-            ListElement { name: "LightBlue" }
-            ListElement { name: "Cyan" }
-            ListElement { name: "Teal" }
-            ListElement { name: "Green" }
-            ListElement { name: "LightGreen" }
-            ListElement { name: "Lime" }
-            ListElement { name: "Yellow" }
-            ListElement { name: "Amber" }
-            ListElement { name: "Orange" }
-            ListElement { name: "DeepOrange" }
-            ListElement { name: "Brown" }
-            ListElement { name: "Grey" }
-            ListElement { name: "BlueGrey" }
-        }
+            displayText: "Color"
+            currentIndex: Material.Indigo
 
-        delegate: ItemDelegate {
-            id: delegate
-            text: modelData
-            width: comboBox.popup.width
-            background: Rectangle {
-                color: Material.color(index)
+            model: ListModel {
+                ListElement { name: "Red" }
+                ListElement { name: "Pink" }
+                ListElement { name: "Purple" }
+                ListElement { name: "DeepPurple" }
+                ListElement { name: "Indigo" }
+                ListElement { name: "Blue" }
+                ListElement { name: "LightBlue" }
+                ListElement { name: "Cyan" }
+                ListElement { name: "Teal" }
+                ListElement { name: "Green" }
+                ListElement { name: "LightGreen" }
+                ListElement { name: "Lime" }
+                ListElement { name: "Yellow" }
+                ListElement { name: "Amber" }
+                ListElement { name: "Orange" }
+                ListElement { name: "DeepOrange" }
+                ListElement { name: "Brown" }
+                ListElement { name: "Grey" }
+                ListElement { name: "BlueGrey" }
             }
-            Material.foreground: pressed ? "#ddd" : "#fff"
+
+            delegate: ItemDelegate {
+                text: modelData
+                width: colorBox.popup.width
+                background: Rectangle {
+                    color: Material.color(index)
+                }
+                Material.foreground: pressed ? "#ddd" : "#fff"
+            }
+
+            Material.foreground: "#fff"
+            Material.background: Material.color(colorBox.currentIndex)
         }
 
-        Material.foreground: "#fff"
-        Material.background: Material.color(comboBox.currentIndex)
+        ComboBox {
+            id: themeBox
+
+            displayText: "Theme"
+            currentIndex: Material.Dark
+
+            model: ListModel {
+                ListElement { name: "Light" }
+                ListElement { name: "Dark" }
+            }
+
+            delegate: ItemDelegate {
+                text: modelData
+                width: colorBox.popup.width
+                background: Rectangle {
+                    color: Material.color(index)
+                }
+            }
+        }
     }
 
     footer: Pane {
