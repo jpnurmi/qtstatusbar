@@ -56,6 +56,7 @@ ApplicationWindow {
 
             displayText: "Color"
             currentIndex: Material.Indigo
+            popup.width: 160
 
             model: ListModel {
                 ListElement { name: "Red" }
@@ -80,16 +81,16 @@ ApplicationWindow {
             }
 
             delegate: ItemDelegate {
+                id: colorDelegate
                 text: modelData
                 width: colorBox.popup.width
-                background: Rectangle {
+                Rectangle {
+                    z: -1
+                    anchors.fill: parent
+                    parent: colorDelegate.background
                     color: Material.color(index)
                 }
-                Material.foreground: pressed ? "#ddd" : "#fff"
             }
-
-            Material.foreground: "#fff"
-            Material.background: Material.color(colorBox.currentIndex)
         }
 
         ComboBox {
@@ -104,11 +105,9 @@ ApplicationWindow {
             }
 
             delegate: ItemDelegate {
+                id: themeDelegate
                 text: modelData
-                width: colorBox.popup.width
-                background: Rectangle {
-                    color: Material.color(index)
-                }
+                width: themeBox.popup.width
             }
         }
     }
