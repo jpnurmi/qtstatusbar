@@ -1,7 +1,7 @@
 # statusbar
 A simple QML example app that sets the status bar color on Android.
 
-![screenshot](https://github.com/jpnurmi/statusbar/raw/master/statusbar.png)
+![screenshot](https://github.com/jpnurmi/statusbar/raw/master/example/statusbar.png)
 
 Registering the QML type in C++:
 

@@ -1,15 +1,11 @@
 TEMPLATE = app
 TARGET = statusbar
 QT += qml quick quickcontrols2
-android: QT += androidextras
-CONFIG += c++11
 
-HEADERS += \
-    statusbar.h
+include(../src/statusbar.pri)
 
 SOURCES += \
-    main.cpp \
-    statusbar.cpp
+    main.cpp
 
 RESOURCES += \
     statusbar.qrc
