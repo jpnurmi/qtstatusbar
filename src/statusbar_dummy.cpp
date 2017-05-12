@@ -20,39 +20,19 @@
  * SOFTWARE.
 */
 
-#include "statusbar.h"
 #include "statusbar_p.h"
 
-QColor StatusBarPrivate::color;
-StatusBar::Theme StatusBarPrivate::theme = StatusBar::Light;
-
-StatusBar::StatusBar(QObject *parent) : QObject(parent)
+bool StatusBarPrivate::isAvailable_sys()
 {
+    return false;
 }
 
-bool StatusBar::isAvailable()
+void StatusBarPrivate::setColor_sys(const QColor &color)
 {
-    return StatusBarPrivate::isAvailable_sys();
+    Q_UNUSED(color);
 }
 
-QColor StatusBar::color()
+void StatusBarPrivate::setTheme_sys(StatusBar::Theme theme)
 {
-    return StatusBarPrivate::color;
-}
-
-void StatusBar::setColor(const QColor &color)
-{
-    StatusBarPrivate::color = color;
-    StatusBarPrivate::setColor_sys(color);
-}
-
-StatusBar::Theme StatusBar::theme()
-{
-    return StatusBarPrivate::theme;
-}
-
-void StatusBar::setTheme(Theme theme)
-{
-    StatusBarPrivate::theme = theme;
-    StatusBarPrivate::setTheme_sys(theme);
+    Q_UNUSED(theme);
 }

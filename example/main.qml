@@ -21,6 +21,7 @@
 */
 
 import QtQuick 2.7
+import QtQuick.Window 2.2
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 import StatusBar 0.1
@@ -30,10 +31,12 @@ ApplicationWindow {
     width: 360
     height: 360
     visible: true
+    flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
 
     header: ToolBar {
         id: toolBar
         Material.primary: colorBox.currentIndex
+        topPadding: Qt.platform.os === "ios" ? Screen.height - Screen.desktopAvailableHeight : 0
         Label {
             anchors.centerIn: parent
             text: colorBox.currentText
@@ -119,7 +122,7 @@ ApplicationWindow {
             font.pixelSize: 18
             minimumPixelSize: 6
             fontSizeMode: Label.Fit
-            visible: !StatusBar.available
+            visible: !StatusBar.available && Qt.platform.os === "android"
             horizontalAlignment: Qt.AlignHCenter
             text: "Android 5.0 Lollipop (API level 21) or later is required."
             color: Material.color(Material.Red)

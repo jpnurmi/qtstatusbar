@@ -36,20 +36,16 @@ class StatusBar : public QObject
 public:
     explicit StatusBar(QObject *parent = nullptr);
 
-    bool isAvailable() const;
+    static bool isAvailable();
 
-    QColor color() const;
-    void setColor(const QColor &color);
+    static QColor color();
+    static void setColor(const QColor &color);
 
     enum Theme { Light, Dark };
     Q_ENUM(Theme)
 
-    Theme theme() const;
-    void setTheme(Theme theme);
-
-private:
-    QColor m_color;
-    Theme m_theme;
+    static Theme theme();
+    static void setTheme(Theme theme);
 };
 
 #endif // STATUSBAR_H
