@@ -63,7 +63,7 @@ void StatusBarPrivate::setTheme_sys(StatusBar::Theme theme)
         QAndroidJniObject window = getAndroidWindow();
         QAndroidJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
         int visibility = view.callMethod<int>("getSystemUiVisibility", "()I");
-        if (theme == Light)
+        if (theme == StatusBar::Theme::Light)
             visibility |= SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         else
             visibility &= ~SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
