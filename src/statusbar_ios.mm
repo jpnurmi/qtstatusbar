@@ -68,17 +68,12 @@ void togglePreferredStatusBarStyle()
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     if (keyWindow)
         setPreferredStatusBarStyle(keyWindow, style);
-
-    QTimer* timer = new QTimer();
-    timer->setInterval(200);
-    timer->setSingleShot(true);
-    QObject::connect(timer, &QTimer::timeout, timer, []() {
+    QTimer::singleShot(200, []() {
         UIStatusBarStyle style = statusBarStyle(StatusBarPrivate::theme);
         UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
         if (keyWindow)
             setPreferredStatusBarStyle(keyWindow, style);
-    }, Qt::UniqueConnection);
-    timer->start();
+    });
 }
 
 static void updatePreferredStatusBarStyle()
