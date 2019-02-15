@@ -15,7 +15,6 @@ if (Qt5_POSITION_INDEPENDENT_CODE)
 endif()
 
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON) # This is to find generated *.moc and *.h files in build dir
 
 set(STATUSBAR_COMMON_SOURCES 
 statusbar.h
