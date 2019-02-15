@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-
+#include <QtQml>
 #include "statusbar.h"
 #include "statusbar_p.h"
 
@@ -56,3 +56,10 @@ void StatusBar::setTheme(Theme theme)
     StatusBarPrivate::theme = theme;
     StatusBarPrivate::setTheme_sys(theme);
 }
+
+void registerQmlStatusBar()
+{
+    qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
+}
+
+Q_COREAPP_STARTUP_FUNCTION(registerQmlStatusBar)
