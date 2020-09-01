@@ -1,7 +1,7 @@
-# StatusBar
-A simple StatusBar implementation that allows setting the status bar
-**color** <sup>[1]</sup> and **theme** <sup>[2]</sup> on Android and
-iOS.
+# StatusBar for Qt
+
+StatusBar for Qt allows setting the status bar **color** <sup>[1]</sup>
+and **theme** <sup>[2]</sup> on Android and iOS.
 
 ## Android
 
