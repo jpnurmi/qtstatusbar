@@ -22,7 +22,12 @@
 
 #include "statusbar_p.h"
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QtAndroid>
+#else
+#include <QJniObject>
+#include <qcoreapplication_platform.h>
+#endif
 
 // WindowManager.LayoutParams
 #define FLAG_TRANSLUCENT_STATUS 0x04000000
@@ -30,9 +35,17 @@
 // View
 #define SYSTEM_UI_FLAG_LIGHT_STATUS_BAR 0x00002000
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 static QAndroidJniObject getAndroidWindow()
+#else
+static QJniObject getAndroidWindow()
+#endif
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QAndroidJniObject window = QtAndroid::androidActivity().callObjectMethod("getWindow", "()Landroid/view/Window;");
+#else
+    QJniObject window = QJniObject(QNativeInterface::QAndroidApplication::context()).callObjectMethod("getWindow", "()Landroid/view/Window;");
+#endif
     window.callMethod<void>("addFlags", "(I)V", FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
     window.callMethod<void>("clearFlags", "(I)V", FLAG_TRANSLUCENT_STATUS);
     return window;
@@ -40,22 +53,37 @@ static QAndroidJniObject getAndroidWindow()
 
 bool StatusBarPrivate::isAvailable_sys()
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     return QtAndroid::androidSdkVersion() >= 21;
+#else
+    return QNativeInterface::QAndroidApplication::sdkVersion() >= 21;
+#endif
 }
 
 void StatusBarPrivate::setColor_sys(const QColor &color)
 {
-    if (QtAndroid::androidSdkVersion() < 21)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        if (QtAndroid::androidSdkVersion() < 21)
+            return;
+
+        QtAndroid::runOnAndroidThread([=]() {
+            QAndroidJniObject window = getAndroidWindow();
+            window.callMethod<void>("setStatusBarColor", "(I)V", color.rgba());
+        });
+#else
+    if (QNativeInterface::QAndroidApplication::sdkVersion() < 21)
         return;
 
-    QtAndroid::runOnAndroidThread([=]() {
-        QAndroidJniObject window = getAndroidWindow();
+    QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
+        QJniObject window = getAndroidWindow();
         window.callMethod<void>("setStatusBarColor", "(I)V", color.rgba());
     });
+#endif
 }
 
 void StatusBarPrivate::setTheme_sys(StatusBar::Theme theme)
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     if (QtAndroid::androidSdkVersion() < 23)
         return;
 
@@ -69,4 +97,19 @@ void StatusBarPrivate::setTheme_sys(StatusBar::Theme theme)
             visibility &= ~SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         view.callMethod<void>("setSystemUiVisibility", "(I)V", visibility);
     });
+#else
+    if (QNativeInterface::QAndroidApplication::sdkVersion() < 23)
+        return;
+
+    QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
+        QJniObject window = getAndroidWindow();
+        QJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
+        int visibility = view.callMethod<int>("getSystemUiVisibility", "()I");
+        if (theme == StatusBar::Theme::Light)
+            visibility |= SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        else
+            visibility &= ~SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        view.callMethod<void>("setSystemUiVisibility", "(I)V", visibility);
+    });
+#endif
 }

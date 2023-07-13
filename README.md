@@ -5,14 +5,14 @@ and **theme** <sup>[2]</sup> on Android and iOS.
 
 ## Android
 
-![screenshot](example/android.png "Nexus 6")
+![screenshot](screenshots/android.png "Nexus 6")
 
 1. **NOTE**: *`StatusBar::color` requires Android 5.0 Lollipop (API level 21) or later.*
 2. **NOTE**: *`StatusBar::theme` requires Android 6.0 Marshmallow (API level 23) or later.*
 
 ## iOS
 
-![screenshot](example/ios.png "iPhone 6s")
+![screenshot](screenshots/ios.png "iPhone 6s")
 
 It is recommended to set the `Qt.MaximizeUsingFullscreenGeometryHint`
 window flag, and take the difference between `Screen.height` and
@@ -30,11 +30,29 @@ window flag, and take the difference between `Screen.height` and
 
 ## Build
 
+### qmake:
+
 The easiest way to include `StatusBar` to a project is to copy over the
 contents of the `src` folder and include `statusbar.pri` in the project
 file (see [example/statusbar.pro](example/statusbar.pro)):
 
+```
     include(path/to/statusbar.pri)
+    INCLUDEPATH += ../QStatusBarLib/include
+```
+
+### CMake:
+
+see [example/CMakeLists.txt](example/CMakeLists.txt):
+
+```CMake
+    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../QStatusBarLib/include)
+    
+    target_link_libraries(
+        ${PROJECT_NAME} PRIVATE
+        ${QStatusBarLib}
+    )
+```
 
 ## Register
 

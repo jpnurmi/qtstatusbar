@@ -2,7 +2,8 @@ TEMPLATE = app
 TARGET = statusbar
 QT += qml quick quickcontrols2
 
-include(../src/statusbar.pri)
+include(../QStatusBarLib/statusbar.pri)
+INCLUDEPATH += ../QStatusBarLib/include
 
 SOURCES += \
     main.cpp
